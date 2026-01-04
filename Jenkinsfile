@@ -52,7 +52,7 @@ pipeline {
             steps {
                 echo "Running the image and opening the application in dev environment...."
                 sh "docker rm -f myapp-dev || true"
-                sh "docker container run -d --name myapp-dev -p 8081:8080 ${env.DOCKER_REPO}:v2"
+                sh "docker container run -d --name myapp-dev -p 8081:8080 -p 9404:9404 ${env.DOCKER_REPO}:v2"
             }
         }
     }
