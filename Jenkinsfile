@@ -44,7 +44,7 @@ pipeline {
             steps {
                 echo "Pushing the docker image to the docker hub repository...."
                 withDockerRegistry([credentialsId: 'docregcred', url: '']) {
-                    sh "docker image push ${env.DOCKER_REPO}:v1"
+                    sh "docker image push ${env.DOCKER_REPO}:v2"
                 }
             }
         }
