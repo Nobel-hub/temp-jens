@@ -31,13 +31,13 @@ pipeline {
         stage('Build the docker image') {
             steps {
                 echo "Building a docker image of the java app...."
-                sh "docker build -t ${env.DOCKER_REPO}:v1 ."
+                sh "docker build -t ${env.DOCKER_REPO}:v2 ."
             }
         }
         stage('Scanning the image using Trivy') {
             steps {
                 echo "Scanning CVEs using Trivy..."
-                sh "trivy image --scanners vuln --severity HIGH,CRITICAL --ignore-unfixed ${env.DOCKER_REPO}:v1 --format json -o report.json"
+                sh "trivy image --scanners vuln --severity HIGH,CRITICAL --ignore-unfixed ${env.DOCKER_REPO}:v2 --format json -o report.json"
             }
         }
         stage('Push the Docker image') {
@@ -52,7 +52,7 @@ pipeline {
             steps {
                 echo "Running the image and opening the application in dev environment...."
                 sh "docker rm -f myapp-dev || true"
-                sh "docker container run -d --name myapp-dev -p 8081:8080 ${env.DOCKER_REPO}:v1"
+                sh "docker container run -d --name myapp-dev -p 8081:8080 ${env.DOCKER_REPO}:v2"
             }
         }
     }
